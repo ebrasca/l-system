@@ -3,5 +3,7 @@
 (defpackage #:l-system
   (:use #:cl #:iter)
   (:export #:l-system
-	   #:turtle))
+	   #:turtle
+	   #:iter-l-system
+	   #:eval-l-system))
 

@@ -36,6 +36,14 @@
 			  item))
 	(finally (return item))))
 
+(defun eval-l-system (fn list)
+  (iter (with seed = '(0 0 0))
+	(for item in list)
+	(appending (setf seed
+			 (mapcar #'+
+				 seed
+				 (car (funcall fn item)))))))
+
 #|
 (iterconcat (l-system (a a i a d a)
 		      (b b d b i b)
@@ -53,4 +61,15 @@
         A D A D B D A I A D A D A D B D A I A D A D A D B D B D B I B D A D B D B D B
         I B D A D B D B D B I B I B I A I B D B I B D A D B D A I A D A D A D B D B D
         B I B D A D B D)
+
+(eval-l-system (l-system (a (0.0 1.0 0.0))
+			 (b (0.0 -1.0 0.0))
+			 (i (-1.0 0.0 0.0))
+			 (d (1.0 0.0 0.0)))
+	       (iter-l-system (l-system (a a i a d a)
+			 (b b d b i b)
+			 (i i b i a i)
+			 (d d a d b d))
+			      '(d)
+			      3))
 |#

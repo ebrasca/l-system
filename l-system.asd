@@ -9,5 +9,7 @@
   :depends-on (:sb-cga
 	       :iterate)
   :components ((:file "package")
-               (:file "l-system")))
+	       (:file "turtle-system")
+               (:file "l-system")
+	       (:file "test")))
 

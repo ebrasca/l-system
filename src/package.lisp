@@ -1,9 +1,8 @@
 ;;;; package.lisp
 
 (defpackage #:l-system
-  (:use #:cl #:iter)
+  (:use #:cl #:iter #:sb-cga)
   (:export #:l-system
-	   #:turtle
-	   #:iter-l-system
-	   #:eval-l-system))
-
+	   #:turtle-system
+	   #:temp
+	   #:iter-l-system))

@@ -4,5 +4,5 @@
   (:use #:cl #:iter #:sb-cga)
   (:export #:l-system
 	   #:turtle-system
-	   #:temp
+	   #:list-of-vectors->list
 	   #:iter-l-system))

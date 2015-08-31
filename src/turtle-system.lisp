@@ -9,6 +9,7 @@
 (defun turtle-system (list radians)
   (iter (with seed = sb-cga:+identity-matrix+)
 	(with vec = (sb-cga:vec 1.0 0.0 0.0))
+	(with pile)
 	(with angle = radians)
 	(for item in list)
 	(case item
@@ -57,15 +58,16 @@
 				  (matrix*
 				   (rotate-around (vec 1.0 0.0 0.0) (- angle))
 				   (translate vec)))))
-	  #|
-	  (([) )
-	  ((]) )
-	  |#
-	  )))
+	  (([)
+	   (push (cons seed vec) pile))
+	  ((])
+	   (let ((last-state (pop pile)))
+	     (setf seed (first last-state)
+		   vec (rest last-state)))))))
 
-(defun temp (list)
-    (iter (for matrix in list)
-	  (appending
-	   (concatenate 'list
-			(sb-cga:transform-point (vec 0.0 0.0 0.0)
-						matrix)))))
+(defun list-of-vectors->list (list-of-vectors)
+  (iterconcat #'(lambda (matrix)
+		  (concatenate 'list
+			       (sb-cga:transform-point (vec 0.0 0.0 0.0)
+						       matrix)))
+	      list-of-vectors))

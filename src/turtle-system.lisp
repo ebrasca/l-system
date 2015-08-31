@@ -5,23 +5,25 @@
 ;;;(matrix* translate rotate scale)
 
 (export 'f)
+(export	'[)
+(export	'])
 
 (defun turtle-system (list radians)
-  (iter (with seed = sb-cga:+identity-matrix+)
-	(with vec = (sb-cga:vec 1.0 0.0 0.0))
-	(with pile)
+  (iter (with pos = (sb-cga:vec 0.0 0.0 0.0))
+	(with vec = (sb-cga:vec 0.0 1.0 0.0))
+	(with pile = '())
 	(with angle = radians)
 	(for item in list)
 	(case item
 	  ((f)
 	   (collect
-	       (setf seed
-		     (matrix* seed
-			      (translate vec)))))
+	       (setf pos
+		     (vec+ pos
+			   vec))))
 	  ((j)
-	   (setf seed
-		 (matrix* seed
-			  (translate vec))))
+	   (setf pos
+		 (vec+ pos
+		       vec)))
 	  ((+)
 	   (setf vec
 		 (transform-point (vec 0.0 0.0 0.0)
@@ -32,7 +34,7 @@
 	   (setf vec
 		 (transform-point (vec 0.0 0.0 0.0)
 				  (matrix*
-				   (rotate-around (vec 0.0 0.0 1.0) (- angle))
+				   (rotate-around (vec 0.0 0.0 -1.0) angle)
 				   (translate vec)))))
 	  ((&)
 	   (setf vec
@@ -44,7 +46,7 @@
 	   (setf vec
 		 (transform-point (vec 0.0 0.0 0.0)
 				  (matrix*
-				   (rotate-around (vec 0.0 1.0 0.0) (- angle))
+				   (rotate-around (vec 0.0 -1.0 0.0) angle)
 				   (translate vec)))))
 	  ((\ )
 	   (setf vec
@@ -56,18 +58,20 @@
 	   (setf vec
 		 (transform-point (vec 0.0 0.0 0.0)
 				  (matrix*
-				   (rotate-around (vec 1.0 0.0 0.0) (- angle))
+				   (rotate-around (vec -1.0 0.0 0.0) angle)
 				   (translate vec)))))
 	  (([)
-	   (push (cons seed vec) pile))
+	   (push (list pos vec)
+		 pile))
 	  ((])
-	   (let ((last-state (pop pile)))
-	     (setf seed (first last-state)
-		   vec (rest last-state)))))))
+	   (let* ((asd (pop pile))
+		  (pos0 (first asd))
+		  (vec0 (second asd)))
+	     (setf pos pos0)
+	     (setf vec vec0))))))
 
 (defun list-of-vectors->list (list-of-vectors)
-  (iterconcat #'(lambda (matrix)
+  (iterconcat #'(lambda (vec)
 		  (concatenate 'list
-			       (sb-cga:transform-point (vec 0.0 0.0 0.0)
-						       matrix)))
+			       vec))
 	      list-of-vectors))

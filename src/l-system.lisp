@@ -23,7 +23,9 @@
 
 (defun generate-l-system (rules)
   "Make lambda Lindenmayer system"
-  `(lambda (atom) (case atom ,@(make-case-clauses-from-rules rules))))
+  `(lambda (atom) (case atom
+		    ,@(make-case-clauses-from-rules rules)
+		    (t (list atom)))))
 
 (defmacro l-system (&rest rules)
   (generate-l-system rules))

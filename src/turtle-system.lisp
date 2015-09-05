@@ -8,7 +8,7 @@
 (export	'[)
 (export	'])
 
-(defun turtle-system (list radians)
+(defun turtle-system (fn list radians)
   (iter (with pos = (sb-cga:vec 0.0 0.0 0.0))
 	(with vec = (sb-cga:vec 0.0 1.0 0.0))
 	(with pile = '())
@@ -16,50 +16,32 @@
 	(for item in list)
 	(case item
 	  ((f)
-	   (collect
-	       (setf pos
-		     (vec+ pos
-			   vec))))
+	   (let ((new-pos
+		  (vec+ pos vec)))
+	     (appending (funcall fn pos new-pos vec))
+	     (setf pos new-pos)))
 	  ((j)
 	   (setf pos
 		 (vec+ pos
 		       vec)))
 	  ((+)
 	   (setf vec
-		 (transform-point (vec 0.0 0.0 0.0)
-				  (matrix*
-				   (rotate-around (vec 0.0 0.0 1.0) angle)
-				   (translate vec)))))
+		 (vec-rotate-around vec (vec 0.0 0.0 1.0) angle)))
 	  ((-)
 	   (setf vec
-		 (transform-point (vec 0.0 0.0 0.0)
-				  (matrix*
-				   (rotate-around (vec 0.0 0.0 -1.0) angle)
-				   (translate vec)))))
+		 (vec-rotate-around vec (vec 0.0 0.0 -1.0) angle)))
 	  ((&)
 	   (setf vec
-		 (transform-point (vec 0.0 0.0 0.0)
-				  (matrix*
-				   (rotate-around (vec 0.0 1.0 0.0) angle)
-				   (translate vec)))))
+		 (vec-rotate-around vec (vec 0.0 1.0 0.0) angle)))
 	  ((^)
 	   (setf vec
-		 (transform-point (vec 0.0 0.0 0.0)
-				  (matrix*
-				   (rotate-around (vec 0.0 -1.0 0.0) angle)
-				   (translate vec)))))
+		 (vec-rotate-around vec (vec 0.0 -1.0 0.0) angle)))
 	  ((\ )
 	   (setf vec
-		 (transform-point (vec 0.0 0.0 0.0)
-				  (matrix*
-				   (rotate-around (vec 1.0 0.0 0.0) angle)
-				   (translate vec)))))
+		 (vec-rotate-around vec (vec 1.0 0.0 0.0) angle)))
 	  ((/)
 	   (setf vec
-		 (transform-point (vec 0.0 0.0 0.0)
-				  (matrix*
-				   (rotate-around (vec -1.0 0.0 0.0) angle)
-				   (translate vec)))))
+		 (vec-rotate-around vec (vec -1.0 0.0 0.0) angle)))
 	  (([)
 	   (push (list pos vec)
 		 pile))
@@ -70,8 +52,16 @@
 	     (setf pos pos0)
 	     (setf vec vec0))))))
 
+;;; Turgle utils
+
 (defun list-of-vectors->list (list-of-vectors)
   (iterconcat #'(lambda (vec)
 		  (concatenate 'list
 			       vec))
 	      list-of-vectors))
+
+(defun vec-rotate-around (vec vec-rotation angle)
+  (transform-point (vec 0.0 0.0 0.0)
+		   (matrix*
+		    (rotate-around vec-rotation angle)
+		    (translate vec))))

@@ -15,36 +15,46 @@
 	(with angle = radians)
 	(for item in list)
 	(case item
+	  ;;Move forward one unit,adding data to mesh.
 	  ((f)
 	   (let ((new-pos
 		  (vec+ pos vec)))
 	     (appending (funcall fn pos new-pos vec))
 	     (setf pos new-pos)))
+	  ;;Move forward one unit,without adding data to mesh.
 	  ((j)
 	   (setf pos
 		 (vec+ pos
 		       vec)))
+	  ;;Rotate left on axis z
 	  ((+)
 	   (setf vec
 		 (vec-rotate-around vec (vec 0.0 0.0 1.0) angle)))
+	  ;;Rotate right on axis z
 	  ((-)
 	   (setf vec
 		 (vec-rotate-around vec (vec 0.0 0.0 -1.0) angle)))
+	  ;;Rotate left on axis y
 	  ((&)
 	   (setf vec
 		 (vec-rotate-around vec (vec 0.0 1.0 0.0) angle)))
+	  ;;Rotate right on axis y
 	  ((^)
 	   (setf vec
 		 (vec-rotate-around vec (vec 0.0 -1.0 0.0) angle)))
+	  ;;Rotate left on axis x
 	  ((\ )
 	   (setf vec
 		 (vec-rotate-around vec (vec 1.0 0.0 0.0) angle)))
+	  ;;Rotate right on axis x
 	  ((/)
 	   (setf vec
 		 (vec-rotate-around vec (vec -1.0 0.0 0.0) angle)))
+	  ;;Push the current turtle state onto a stack
 	  (([)
 	   (push (list pos vec)
 		 pile))
+	  ;;Pop the turtle stack, restoring an earlier state
 	  ((])
 	   (let* ((asd (pop pile))
 		  (pos0 (first asd))
@@ -61,6 +71,7 @@
 	      list-of-vectors))
 
 (defun vec-rotate-around (vec vec-rotation angle)
+  "Rotate vec around vec-rotation axis by angle"
   (transform-point (vec 0.0 0.0 0.0)
 		   (matrix*
 		    (rotate-around vec-rotation angle)

@@ -5,6 +5,7 @@
 ;;;(matrix* translate rotate scale)
 
 (export 'f)
+(export 'q)
 (export	'[)
 (export	'])
 
@@ -13,7 +14,7 @@
 	(with vec-x = (sb-cga:vec 1.0 0.0 0.0))
 	(with vec-y = (sb-cga:vec 0.0 1.0 0.0))
 	(with vec-z = (sb-cga:vec 0.0 0.0 1.0))
-	(with pile = '())
+	(with stack = '())
 	(with angle = radians)
 	(for item in list)
 	(case item
@@ -53,7 +54,7 @@
 	   (setf vec-z
 		 (vec-rotate-around vec-z vec-y (- angle))))
 	  ;;Rotate left on axis x
-	  ((\ )
+	  ((q)
 	   (setf vec-z
 		 (vec-rotate-around vec-z vec-x angle))
 	   (setf vec-y
@@ -67,10 +68,10 @@
 	  ;;Push the current turtle state onto a stack
 	  (([)
 	   (push (list pos vec-x vec-y vec-z)
-		 pile))
+		 stack))
 	  ;;Pop the turtle stack, restoring an earlier state
 	  ((])
-	   (let* ((asd (pop pile))
+	   (let* ((asd (pop stack))
 		  (pos0 (pop asd))
 		  (vec-x0 (pop asd))
 		  (vec-y0 (pop asd))

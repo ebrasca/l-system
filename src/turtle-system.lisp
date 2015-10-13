@@ -17,7 +17,7 @@
 	(with stack = '())
 	(with angle = radians)
 	(for item in list)
-	(case item
+	(case (car item)
 	  ;;Move forward one unit,adding data to mesh.
 	  ((f)
 	   (let ((new-pos

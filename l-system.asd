@@ -10,6 +10,5 @@
 	       :iterate)
   :components ((:file "package")
 	       (:file "turtle-system")
-               (:file "l-system")
-	       (:file "test")))
+               (:file "l-system")))
 

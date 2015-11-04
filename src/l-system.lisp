@@ -25,10 +25,16 @@
   (iter (for clause in clauses)
 	(appending (let ((func (gethash (car clause) *l-system-clauses*)))
 		     (if (functionp func)
-			 (let ((result (funcall func (rest clause))))
+			 (let ((result (apply func
+					      (rest clause))))
 			   (when result
 			     result))
 			 (list clause))))))
+
+(defmacro deflsys (symbol vars &body body)
+  `(def-l-system-clause ',symbol
+       (lambda ,vars
+	 ,@body)))
 
 (defun def-l-system-clause (symbol lambda)
   (setf (gethash symbol *l-system-clauses*)

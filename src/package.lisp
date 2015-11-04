@@ -6,6 +6,7 @@
 	   #:l-system
 	   #:map-l-system
 	   #:def-l-system-clause
+	   #:deflsys
 
 	   #:turtle-system
 	   #:list-of-vectors->list))

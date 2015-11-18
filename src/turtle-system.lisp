@@ -14,15 +14,10 @@
 	(case (car item)
 	  ;;Move forward one unit,adding data to mesh.
 	  ((f)
-	   (let ((pos (get-vec coor-sys))
-		 (vec-x (get-axis coor-sys 0))
-		 (vec-y (get-axis coor-sys 1))
-		 (vec-z (get-axis coor-sys 2)))
-	     (setf coor-sys (mtranslate coor-sys
-					(vec* (vec 0.0 1.0 0.0)
-					      (cadr item))))
-	     (appending (funcall fn pos (get-vec coor-sys)
-				 vec-x vec-y vec-z))))
+	   (setf coor-sys (mtranslate coor-sys
+				      (vec* (vec 0.0 1.0 0.0)
+					    (cadr item))))
+	   (appending (funcall fn coor-sys)))
 	  ;;Move forward one unit,without adding data to mesh.
 	  ((j)
 	   (setf coor-sys (mtranslate coor-sys

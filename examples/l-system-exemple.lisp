@@ -76,10 +76,12 @@
 	    ;;convert list of vecs to array
 	    (list-of-vectors->list
 	     ;;make list of vecs
-	     (turtle-system #'(lambda (old new x y z)
-				(list old new))
-			    ;;make structure of turtle commands
-			    (l-system '((f 1.0)) 3))))
+	     (turtle-system
+	      ;;Specific geometry for symbol f
+	      #'(lambda (o n list)
+		  (cube o n))
+	      ;;make structure of turtle commands
+	      (l-system '((f 1.0)) 3))))
 	   (length (length data))
 	   (array (make-array length
 		    :element-type 'single-float
@@ -88,7 +90,7 @@
       (setf vao
 	    (make-instance 'vao
 			   :type 'vertex-3d
-			   :primitive :lines
+			   :primitive :triangles
 			   :vertex-count (/ length 3)))
       (vao-buffer-vector vao 0 (* 4 length) array)
       (vao-buffer-vector vao 1 (* 4 length) array))))

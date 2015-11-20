@@ -14,10 +14,11 @@
 	(case (car item)
 	  ;;Move forward one unit,adding data to mesh.
 	  ((f)
-	   (setf coor-sys (mtranslate coor-sys
-				      (vec* (vec 0.0 1.0 0.0)
-					    (cadr item))))
-	   (appending (funcall fn coor-sys)))
+	   (let ((new-coor-sys (mtranslate coor-sys
+					   (vec* (vec 0.0 1.0 0.0)
+						 (cadr item)))))
+	     (appending (funcall fn coor-sys new-coor-sys (cdr item)))
+	     (setf coor-sys new-coor-sys)))
 	  ;;Move forward one unit,without adding data to mesh.
 	  ((j)
 	   (setf coor-sys (mtranslate coor-sys
@@ -96,3 +97,27 @@
 (defun get-vec (matrix)
   (transform-point (vec 0.0 0.0 0.0)
 		   matrix))
+
+;;; Test geometry
+
+(defun cube (matrix0 matrix1)
+  (let ((x0 (get-axis matrix0 0))
+	(y0 (get-axis matrix0 1))
+	(z0 (get-axis matrix0 2))
+	(pos0 (get-vec matrix0))
+	(x1 (get-axis matrix1 0))
+	(y1 (get-axis matrix1 1))
+	(z1 (get-axis matrix1 2))
+	(pos1 (get-vec matrix1)))
+    (list
+     pos0 pos1 (vec+ pos0 x0)
+     (vec+ pos0 x0) (vec+ pos1 x1) pos1
+     
+     (vec+ pos0 z0) (vec+ pos0 (vec+ x0 z0)) (vec+ pos1 z1)
+     (vec+ pos0 (vec+ x0 z0)) (vec+ pos1 z1) (vec+ pos1 (vec+ x1 z1))
+
+     (vec+ pos0 x0) (vec+ pos1 x1) (vec+ pos0 (vec+ x0 z0))
+     (vec+ pos0 (vec+ x0 z0)) (vec+ pos1 x1) (vec+ pos1  (vec+ x1 z1))
+
+     pos0 pos1 (vec+ pos0 z0)
+     (vec+ pos0 z0) pos1 (vec+ pos1 z1))))

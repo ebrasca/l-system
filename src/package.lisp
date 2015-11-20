@@ -9,4 +9,11 @@
 	   #:deflsys
 
 	   #:turtle-system
-	   #:list-of-vectors->list))
+	   #:list-of-vectors->list
+
+	   #:mtranslate
+	   #:mrotate
+	   #:get-axis
+	   #:get-vec
+
+	   #:cube))

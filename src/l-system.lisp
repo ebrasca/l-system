@@ -1,7 +1,4 @@
 ;;;; l-system.lisp
-#|
-(ql:quickload :l-system)
-|#
 
 (in-package #:l-system)
 
@@ -31,11 +28,11 @@
 			     result))
 			 (list clause))))))
 
-(defmacro deflsys (symbol vars &body body)
+(defmacro -> (symbol vars &body body)
   `(def-l-system-clause ',symbol
        (lambda ,vars
 	 ,@body)))
 
 (defun def-l-system-clause (symbol lambda)
   (setf (gethash symbol *l-system-clauses*)
-	lambda))
+ 	lambda))

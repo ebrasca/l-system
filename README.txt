@@ -1,7 +1,7 @@
 #l-system
 
-This is based on Lindenmayer system with lists on place of strings.
-Main goal of this proyect are flexibility.
+This is based on Lindenmayer system, with lists instead of strings.
+The main goal of this proyect is flexibility.
 
 At the moment, this includes the following functionality:
 

@@ -6,11 +6,6 @@
 
 (defparameter *l-system-clauses* (make-hash-table :test 'eq))
 
-(defun iterconcat (fn list)
-  "Applies fn on each element of list, and concatenate a copy of the resulting lists."
-  (iter (for item in list)
-	(appending (funcall fn item))))
-
 (defun l-system (axiom depth)
   (iter (repeat depth)
 	(with result = axiom)
@@ -28,11 +23,20 @@
 			     result))
 			 (list clause))))))
 
-(defmacro -> (symbol vars &body body)
-  `(def-l-system-clause ',symbol
-       (lambda ,vars
-	 ,@body)))
-
-(defun def-l-system-clause (symbol lambda)
+(defun setf-l-system-rule (symbol lambda)
   (setf (gethash symbol *l-system-clauses*)
  	lambda))
+
+(defun make-l-system-expr (item)
+  `(list ',(first item) ,(second item)))
+
+(defun make-l-system-list (rest)
+  (iter (for item in rest)
+	(collecting (make-l-system-expr item))))
+
+(defmacro make-l-system-rule (vars &body body)
+  `#'(lambda ,vars (list ,@(make-l-system-list body))))
+
+(defmacro -> (symbol vars &body body)
+  `(setf-l-system-rule ',symbol
+		       (make-l-system-rule ,vars ,@body)))

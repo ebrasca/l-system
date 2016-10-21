@@ -1,6 +1,6 @@
 (in-package #:l-system-examples)
 
-(-> f (x)
+(-> f ()
   (f 1)
   (j 1)
   (f 1))

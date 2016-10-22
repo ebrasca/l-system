@@ -18,7 +18,7 @@
 	(for func = (gethash symbol *l-system-clauses*))
 	(appending (if (functionp func)
 		       (apply func parameters)
-		       parameters))))
+		       (list `(,symbol ,@parameters))))))
 
 (defmacro setf-l-system-rule (symbol lambda)
   `(setf (gethash ,symbol *l-system-clauses*)

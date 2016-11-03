@@ -5,6 +5,7 @@ The main goal of this proyect is flexibility.
 
 At the moment, this includes the following functionality:
 
-*Manage parametric l system.
+*Parametric grammars.
+*Context sensitive grammars.
 
 For an example, see 'examples/l-system-exemple.lisp'.

@@ -8,4 +8,4 @@
     :serial t
     :depends-on (:l-system)
     :components ((:file "package")
-		 (:file "l-system-exemple")))
+		 (:file "l-system-example")))

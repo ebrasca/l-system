@@ -8,4 +8,4 @@ At the moment, this includes the following functionality:
 *Parametric grammars.
 *Context sensitive grammars.
 
-For an example, see 'examples/l-system-exemple.lisp'.
+For an example, see 'examples/l-system-example.lisp'.

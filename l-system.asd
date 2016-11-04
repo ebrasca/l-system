@@ -6,8 +6,6 @@
   :license "GPLv3+"
   :pathname "src"
   :serial t
-  :depends-on (:sb-cga
-	       :iterate)
+  :depends-on (:iterate)
   :components ((:file "package")
                (:file "l-system")))
-

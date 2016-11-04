@@ -1,7 +1,7 @@
 ;;;; package.lisp
 
 (defpackage #:l-system
-  (:use #:cl #:iter #:sb-cga)
+  (:use #:cl #:iter)
   (:export #:l-system
   	   #:->
 	   #:parametric-grammar

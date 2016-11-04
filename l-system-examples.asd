@@ -6,8 +6,6 @@
     :license "GPLv3+"
     :pathname "examples"
     :serial t
-    :depends-on (:glkit
-		 :sdl2kit
-		 :l-system)
+    :depends-on (:l-system)
     :components ((:file "package")
 		 (:file "l-system-exemple")))

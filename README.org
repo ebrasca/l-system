@@ -1,0 +1,9 @@
+* L-system
+** L-system is a rewriting system and a type of formal grammar.
+** The purpose of l-system is representation of realistic models of natural patterns.
+** For an example, see 'examples/l-system-example.lisp'.
+** At the moment you can use it like:
+   Lindenmayer's original L-system
+   Parametric grammars
+   Context sensitive grammars
+** It is based on [[https://en.wikipedia.org/wiki/L-system#Variations][Wikipedia link]].

@@ -36,27 +36,9 @@ It can expand to parametric grammar or to context sensitive grammar."
 		       (list `(,symbol1 ,@parameters1))))
 	(setf symbol0 (first (first elt)))))
 
-(defmacro setf-l-system-rule (symbol lambda)
-  "Set rules to grammar."
-  `(setf (gethash ,symbol *l-system-clauses*)
-	 ,lambda))
-
-(defun make-l-system-expr (item)
-  "(Symbol . paremetes)"
-  `(list ',(first item) ,@(rest item)))
-
-(defun make-l-system-list (rest)
-  "Make rule conversion part."
-  (iter (for item in rest)
-	(collecting (make-l-system-expr item))))
-
-(defmacro make-l-system-rule (vars &body body)
-  "Define rule for grammar."
-  `#'(lambda ,(append vars '(&rest rest))
-       (declare (ignorable rest))
-       (list ,@(make-l-system-list body))))
-
 (defmacro -> (symbol vars &body body)
   "Define and set rules to grammar."
-  `(setf-l-system-rule ',symbol
-		       (make-l-system-rule ,vars ,@body)))
+  `(setf (gethash ',symbol *l-system-clauses*)
+         #'(lambda ,(append vars '(&rest rest))
+             (declare (ignorable rest))
+             ,@body)))

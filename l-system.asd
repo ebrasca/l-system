@@ -2,7 +2,7 @@
 
 (asdf:defsystem #:l-system
   :description "L-system or Lindenmayer system on lists"
-  :author "Bruno Cichon <ebrasca.ebrasca@gmail.com>"
+  :author "Bruno Cichon <ebrasca.ebrasca@openmailbox.org>"
   :license "GPLv3+"
   :pathname "src"
   :serial t

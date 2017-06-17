@@ -42,3 +42,8 @@ It can expand to parametric grammar or to context sensitive grammar."
          #'(lambda ,(append vars '(&rest rest))
              (declare (ignorable rest))
              ,@body)))
+
+(defun unset-rule (symbol)
+  "Unset rules from grammar."
+  (setf (gethash symbol *l-system-clauses*)
+        nil))

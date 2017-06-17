@@ -4,5 +4,6 @@
   (:use #:cl #:iter)
   (:export #:l-system
   	   #:->
+           #:unset-rule
 	   #:parametric-grammar
 	   #:context-sensitive-grammar))
